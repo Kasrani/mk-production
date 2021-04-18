@@ -5,25 +5,3 @@ module.exports = {
       ? '/my-app/'
       : '/'
   }
-
-  // vue.config.js
-module.exports = {
-    configureWebpack: {
-      plugins: [
-        new MyAwesomeWebpackPlugin()
-      ]
-    }
-  }
-
-  // vue.config.js
-module.exports = {
-    chainWebpack: config => {
-      config.module
-        .rule('vue')
-        .use('vue-loader')
-          .tap(options => {
-            // modify the options...
-            return options
-          })
-    }
-  }
