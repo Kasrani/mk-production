@@ -1,4 +1,4 @@
-# my-app
+# mk-production
 
 ## Project setup
 ```
