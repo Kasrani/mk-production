@@ -1,5 +1,5 @@
 <template>
-    <v-btn elevation="2">Page d'accueil</v-btn> 
+    <v-btn elevation="2">Nos services</v-btn> 
 </template>
 <script>
 
