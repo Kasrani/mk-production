@@ -1,9 +1,9 @@
 <template>
     <v-container fluid fill-height class="home-hero" style="max-height: 100vh;">
         <v-layout justify-center align-center column pa-5>
-            <div class="display-4 font-weight-black white--text text-xs-center">MK-PRODUCTION</div>
-            <div class="display-3 font-weight-black white--text text-xs-center mb-3">DESIGN AND DEVELOPMENT</div>
-            <div class="display-1 font-weight-bold white--text text-xs-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+            <div class="title text-center font-weight-black white--text">MK-PRODUCTION</div>
+            <div class="title text-center font-weight-black white--text">DESIGN AND DEVELOPMENT</div>
+            <div class="subtitle-1 text-center font-weight-bold white--text">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
             <v-btn class="mt-5 pink accent-3 white--text">Bonjour !</v-btn>
         </v-layout>
     </v-container>

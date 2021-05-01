@@ -26,7 +26,7 @@
 
     <v-app-bar
       app
-      color="#6A76AB"
+      color="#F50057"
       dark
       prominent
       src="images/bg-home.jpg"
