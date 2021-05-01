@@ -11,6 +11,11 @@ const routes = [
         component: Home
     },
     {
+        name: 'Todo',
+        path: '/todo',
+        component: () => import('../components/pages/Todo.vue')
+    },
+    {
         name: 'Services',
         path: '/services',
         component: () => import('../components/pages/Services.vue')

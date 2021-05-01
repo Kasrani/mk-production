@@ -1,7 +1,9 @@
 <template>
     <v-container fluid>
         <v-layout>
-            <h1>Join Page</h1>
+            <div class="pa-6">
+                <h1>Join Page</h1>
+            </div>
         </v-layout>
     </v-container>
 </template>
