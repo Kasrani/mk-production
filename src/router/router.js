@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import HomePage from '../components/pages/HomePage';
-import ServicesPage from '../components/pages/ServicesPage';
+import Home from '../components/pages/Home';
 
 Vue.use(VueRouter);
 
@@ -9,12 +8,27 @@ const routes = [
     {
         name: 'Home',
         path: '/',
-        component: HomePage
+        component: Home
     },
     {
-        name: 'About',
+        name: 'Services',
         path: '/services',
-        component: ServicesPage
+        component: () => import('../components/pages/Services.vue')
+    },
+    {
+        name: 'Contact',
+        path: '/contact',
+        component: () => import('../components/pages/Contact.vue')
+    },
+    {
+        name: 'Signin',
+        path: '/sign-in',
+        component: () => import('../components/pages/Signin.vue')
+    },
+    {
+        name: 'Join',
+        path: '/join',
+        component: () => import('../components/pages/Join.vue')
     },
 ];
 
