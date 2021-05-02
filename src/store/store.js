@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        search: null,
         tasks: [
             {
                 id: 1,
@@ -19,12 +20,15 @@ export default new Vuex.Store({
         }
     },
     mutations: {
+        setSearch(state, value) {
+            state.search = value
+        },
         addTask(state, newTaskTitle) {
             let newTask = {
                 id: Date.now(),
                 title: newTaskTitle,
                 done: false,
-                duDate: null
+                dueDate: null
             };
             state.tasks.push(newTask)
         },
@@ -77,7 +81,15 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        tasksFiltred(state) {
+            if (!state.search) {
+                return state.tasks
+            }
+            return state.tasks.filter(task =>
+                task.title.toLowerCase().includes(state.search.toLowerCase())
 
+            )
+        }
     },
     modules: {
 

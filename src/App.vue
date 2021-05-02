@@ -29,6 +29,7 @@
       color="#F50057"
       dark
       prominent
+      height="150"
       src="images/bg-home.jpg"
       fade-img-on-scroll
     >
@@ -39,15 +40,19 @@
         ></v-img>
       </template>
 
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-app-bar-title>Title</v-app-bar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <v-container>
+        <v-row>
+          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-spacer></v-spacer>
+          <search />
+        </v-row>
+        <v-row>
+          <v-toolbar-title class="text-h4 ml-3">Title</v-toolbar-title>
+        </v-row>
+        <v-row>
+          <live-data-time />
+        </v-row>
+      </v-container>
       <!--
       <template v-slot:extension>
         <v-tabs align-with-title>
@@ -67,6 +72,8 @@
 </template>
 
 <script>
+import Search from './components/Tools/Search.vue'
+import LiveDateTime from './components/Tools/LiveDateTime.vue'
 import Snackbar from './components/global/Snackbar.vue'
 export default {
   data: () => ({
@@ -81,6 +88,8 @@ export default {
     ],
   }),
   components: {
+    Search,
+    "live-data-time": LiveDateTime,
     Snackbar
   }
 };
