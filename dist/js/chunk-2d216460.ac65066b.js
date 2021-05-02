@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d216460"],{c283:function(a,n,t){"use strict";t.r(n);var e=function(){var a=this,n=a.$createElement,t=a._self._c||n;return t("v-container",{attrs:{fluid:""}},[t("v-layout",[t("div",{staticClass:"pa-6"},[t("h1",[a._v("Join Page")])])])],1)},c=[],i={name:"Join"},o=i,s=t("2877"),u=t("6544"),r=t.n(u),l=t("a523"),p=t("a722"),d=Object(s["a"])(o,e,c,!1,null,"37b4cc80",null);n["default"]=d.exports;r()(d,{VContainer:l["a"],VLayout:p["a"]})}}]);
+//# sourceMappingURL=chunk-2d216460.ac65066b.js.map

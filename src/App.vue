@@ -5,7 +5,7 @@
       <v-img
         class="pa-4 pt-7"
         src="images/bg-home.jpg"
-        height="200"
+        :height="$route.path === '/todo' ? '200' : '150'"
         gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
       >
         <v-avatar size="50" class="mb-2">
@@ -36,7 +36,7 @@
       color="#F50057"
       dark
       prominent
-      height="200"
+      :height="$route.path === '/todo' ? '200' : '150'"
       src="images/bg-home.jpg"
       fade-img-on-scroll
     >
@@ -59,7 +59,7 @@
         <v-row>
           <live-data-time />
         </v-row>
-        <v-row>
+        <v-row v-if="$route.path === '/todo'">
           <!-- Add task filed -->
           <filed-add-task></filed-add-task>
         </v-row>
