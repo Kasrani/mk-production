@@ -5,17 +5,17 @@
       <v-img
         class="pa-4 pt-7"
         src="images/bg-home.jpg"
-        :height="$route.path === '/todo' ? '200' : '150'"
+        height="198"
         gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
       >
-        <v-avatar size="50" class="mb-2">
+        <v-avatar size="50" class="mb-3">
           <img
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            src="images/avatars/mkasrani.jpg"
             alt="Mourad"
           >
         </v-avatar>
-        <div class="white--text text-sibtitle-1 font-weight-bold">Mourad</div>
-        <div class="white--text text-sibtitle-1">Kasrani</div>
+        <div class="white--text text-sibtitle-1 font-weight-bold">Mourad Kasrani</div>
+        <div class="white--text text-sibtitle-2">kasrani.mourad@gmail.com</div>
       </v-img>
 
       <v-list dense nav>
@@ -36,7 +36,7 @@
       color="#F50057"
       dark
       prominent
-      :height="$route.path === '/todo' ? '200' : '150'"
+      :height="$route.path === '/todo' ? '198' : '150'"
       src="images/bg-home.jpg"
       fade-img-on-scroll
     >
@@ -64,15 +64,14 @@
           <filed-add-task></filed-add-task>
         </v-row>
       </v-container>
-      <!--
-      <template v-slot:extension>
+
+      <template v-if="!($route.path === '/todo')" v-slot:extension>
         <v-tabs align-with-title>
           <v-tab>Tab 1</v-tab>
           <v-tab>Tab 2</v-tab>
           <v-tab>Tab 3</v-tab>
         </v-tabs>
       </template>
-      -->
     </v-app-bar>
 
     <v-main>
@@ -92,7 +91,7 @@ export default {
     drawer: null,
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "Todo", icon: "mdi-format-list-checks", to: "/todo" },
+      { title: "Missions", icon: "mdi-format-list-checks", to: "/todo" },
       { title: "Services", icon: "mdi-toolbox", to: "/services" },
       { title: "Contact", icon: "mdi-phone", to: "/contact" },
       { title: "Signin", icon: "mdi-login", to: "/sign-in" },
