@@ -56,7 +56,7 @@
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
-
+      <!--
       <template v-slot:extension>
         <v-tabs align-with-title>
           <v-tab>Tab 1</v-tab>
@@ -64,6 +64,7 @@
           <v-tab>Tab 3</v-tab>
         </v-tabs>
       </template>
+      -->
     </v-app-bar>
 
     <v-main>

@@ -12,7 +12,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn color="grey" text @click="dialog = false">
+        <v-btn color="grey" text @click="$emit('close')">
           Non
         </v-btn>
 
