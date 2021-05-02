@@ -1,15 +1,22 @@
   
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title"> MK-PRODUCTION </v-list-item-title>
-          <v-list-item-subtitle> Bienvenue ! </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
+    <v-navigation-drawer v-model="drawer" :mobile-breakpoint="768" app>
+      <v-img
+        class="pa-4 pt-7"
+        src="images/bg-home.jpg"
+        height="150"
+        gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+      >
+        <v-avatar size="50" class="mb-2">
+          <img
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            alt="Mourad"
+          >
+        </v-avatar>
+        <div class="white--text text-sibtitle-1 font-weight-bold">Mourad</div>
+        <div class="white--text text-sibtitle-1">Kasrani</div>
+      </v-img>
 
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
@@ -40,14 +47,14 @@
         ></v-img>
       </template>
 
-      <v-container>
+      <v-container class="header-container pa-0">
         <v-row>
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
           <v-spacer></v-spacer>
           <search />
         </v-row>
         <v-row>
-          <v-toolbar-title class="text-h4 ml-3">Title</v-toolbar-title>
+          <v-toolbar-title class="text-h4 ml-3">{{ $store.state.appTitle }}</v-toolbar-title>
         </v-row>
         <v-row>
           <live-data-time />
@@ -94,3 +101,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.header-container {
+  max-width: none!important;
+}
+</style>
