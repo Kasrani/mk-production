@@ -10,6 +10,7 @@ export default new Vuex.Store({
                 id: 1,
                 title: "Tache par défaut",
                 done: false,
+                dueDate: '2021-05-01'
             }
         ],
         snackbar: {
@@ -23,6 +24,7 @@ export default new Vuex.Store({
                 id: Date.now(),
                 title: newTaskTitle,
                 done: false,
+                duDate: null
             };
             state.tasks.push(newTask)
         },
@@ -36,6 +38,10 @@ export default new Vuex.Store({
         updateTaskTitle(state, payload) {
             let task = state.tasks.filter((task) => task.id === payload.id)[0]
             task.title = payload.title
+        },
+        updateTaskDueDate(state, payload) {
+            let task = state.tasks.filter((task) => task.id === payload.id)[0]
+            task.dueDate = payload.dueDate
         },
         showSnackbar(state, text) {
             let timeout = 0
@@ -63,7 +69,11 @@ export default new Vuex.Store({
         },
         updateTaskTitle({ commit }, payload) {
             commit('updateTaskTitle', payload)
-            commit('showSnackbar', 'Tache mise à jour !')
+            commit('showSnackbar', 'Tache à jour !')
+        },
+        updateTaskDueDate({ commit }, payload) {
+            commit('updateTaskDueDate', payload)
+            commit('showSnackbar', 'Date à jour !')
         }
     },
     getters: {
