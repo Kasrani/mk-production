@@ -4,7 +4,7 @@
     @click="$store.commit('toggleSorting')"
     color="pink"
   >
-      Done Sorting
+      Terminé
   </v-btn>
 </template>
 

@@ -5,7 +5,7 @@
       <v-img
         class="pa-4 pt-7"
         src="images/bg-home.jpg"
-        height="150"
+        height="200"
         gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
       >
         <v-avatar size="50" class="mb-2">
@@ -36,14 +36,14 @@
       color="#F50057"
       dark
       prominent
-      height="150"
+      height="200"
       src="images/bg-home.jpg"
       fade-img-on-scroll
     >
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
-          gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+          gradient="to top right, rgba(100,115,201,.3), rgba(25,32,72,.7)"
         ></v-img>
       </template>
 
@@ -58,6 +58,10 @@
         </v-row>
         <v-row>
           <live-data-time />
+        </v-row>
+        <v-row>
+          <!-- Add task filed -->
+          <filed-add-task></filed-add-task>
         </v-row>
       </v-container>
       <!--
@@ -81,6 +85,7 @@
 <script>
 import Search from './components/Tools/Search.vue'
 import LiveDateTime from './components/Tools/LiveDateTime.vue'
+import FieldAddTask from './components/Todo/FieldAddTask.vue'
 import Snackbar from './components/global/Snackbar.vue'
 export default {
   data: () => ({
@@ -97,7 +102,11 @@ export default {
   components: {
     Search,
     "live-data-time": LiveDateTime,
+    'filed-add-task': FieldAddTask,
     Snackbar
+  },
+  mounted() {
+    this.$store.dispatch('getTasks')
   }
 };
 </script>
