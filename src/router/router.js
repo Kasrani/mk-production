@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../components/pages/Home';
+import Home from '../views/Home';
 
 Vue.use(VueRouter);
 
@@ -13,27 +13,27 @@ const routes = [
     {
         name: 'Todo',
         path: '/todo',
-        component: () => import('../components/pages/Todo.vue')
+        component: () => import('../views/Todo.vue')
     },
     {
         name: 'Services',
         path: '/services',
-        component: () => import('../components/pages/Services.vue')
+        component: () => import('../views/Services.vue')
     },
     {
         name: 'Contact',
         path: '/contact',
-        component: () => import('../components/pages/Contact.vue')
+        component: () => import('../views/Contact.vue')
     },
     {
         name: 'Signin',
         path: '/sign-in',
-        component: () => import('../components/pages/Signin.vue')
+        component: () => import('../views/Signin.vue')
     },
     {
         name: 'Join',
         path: '/join',
-        component: () => import('../components/pages/Join.vue')
+        component: () => import('../views/Join.vue')
     },
 ];
 
