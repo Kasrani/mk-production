@@ -5,7 +5,7 @@
       <v-img
         class="pa-4 pt-7"
         src="images/bg-home.jpg"
-        height="198"
+        :height="$route.path === '/todo' ? '220' : '198'"
         gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
       >
         <v-avatar size="50" class="mb-3">
@@ -36,7 +36,7 @@
       color="#F50057"
       dark
       prominent
-      :height="$route.path === '/todo' ? '198' : '150'"
+      :height="$route.path === '/todo' ? '220' : '150'"
       src="images/bg-home.jpg"
       fade-img-on-scroll
     >
@@ -49,7 +49,7 @@
 
       <v-container class="header-container pa-0">
         <v-row>
-          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
           <v-spacer></v-spacer>
           <search />
         </v-row>
