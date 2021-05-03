@@ -1,6 +1,6 @@
 <template>
   <v-list subheader flat>
-    <v-subheader>Liste des taches</v-subheader>
+    <v-subheader>Liste des articles</v-subheader>
     <draggable v-model="tasks" handle=".handle">
       <task v-for="task in tasks" :key="task.id" :task="task" />
     </draggable>

@@ -1,10 +1,10 @@
   
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" :mobile-breakpoint="768" app>
+    <v-navigation-drawer v-if="currentUser" v-model="drawer" :mobile-breakpoint="768" app>
       <v-img
         class="pa-4 pt-7"
-        src="images/bg-home.jpg"
+        src="images/friperie.jpg"
         :height="$route.path === '/todo' ? '220' : '198'"
         gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
       >
@@ -40,7 +40,7 @@
       dark
       prominent
       :height="$route.path === '/todo' ? '220' : '150'"
-      src="images/bg-home.jpg"
+      src="images/friperie.jpg"
       fade-img-on-scroll
     >
       <template v-slot:img="{ props }">
@@ -52,7 +52,7 @@
 
       <v-container class="header-container pa-0">
         <v-row>
-          <v-app-bar-nav-icon @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon v-if="currentUser" @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
           <v-spacer></v-spacer>
           <search />
         </v-row>
@@ -70,9 +70,9 @@
 
       <template v-if="!($route.path === '/todo')" v-slot:extension>
         <v-tabs align-with-title>
-          <v-tab>Tab 1</v-tab>
-          <v-tab>Tab 2</v-tab>
-          <v-tab>Tab 3</v-tab>
+          <v-tab to="/">Accueil</v-tab>
+          <v-tab to="/products">Notre sélection</v-tab>
+          <v-tab to="/sign-in">Connexion</v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
@@ -98,8 +98,8 @@ export default {
     drawer: null,
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "Missions", icon: "mdi-format-list-checks", to: "/todo" },
-      { title: "Services", icon: "mdi-toolbox", to: "/services" },
+      { title: "Gestion de stock", icon: "mdi-format-list-checks", to: "/todo" },
+      { title: "Products", icon: "mdi-toolbox", to: "/products" },
       { title: "Contact", icon: "mdi-phone", to: "/contact" },
       { title: "Login", icon: "mdi-login", to: "/sign-in" },
       { title: "Inscription", icon: "mdi-account-box", to: "/sign-up" },

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home';
 import goTo from 'vuetify/es5/services/goto'
 import store from '../store/store';
 
@@ -10,7 +9,7 @@ const routes = [
     {
         name: 'Home',
         path: '/',
-        component: Home
+        component: () => import('../views/Home.vue'),
     },
     {
         name: 'Todo',
@@ -19,10 +18,9 @@ const routes = [
         meta: {authRequired: true}
     },
     {
-        name: 'Services',
-        path: '/services',
-        component: () => import('../views/Services.vue'),
-        meta: {authRequired: true}
+        name: 'Products',
+        path: '/products',
+        component: () => import('../views/Products.vue'),
     },
     {
         name: 'Contact',
