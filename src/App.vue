@@ -22,7 +22,7 @@
       </v-img>
 
       <v-list dense nav>
-        <v-list-item v-show="!(currentUser && item.title === 'Inscription')" v-for="item in items" :key="item.title" :to="item.to" link>
+        <v-list-item v-show="!((currentUser.email !== 'admin@mk-vintage.fr') && (item.title === 'Gestion de stock'))" v-for="item in items" :key="item.title" :to="item.to" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -36,7 +36,7 @@
 
     <v-app-bar
       app
-      color="#F50057"
+      color="#F0BF51"
       dark
       prominent
       :height="$route.path === '/todo' ? '220' : '150'"
@@ -46,7 +46,7 @@
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
-          gradient="to top right, rgba(100,115,201,.3), rgba(25,32,72,.7)"
+          gradient="to top right, rgba(100,115,201,.3), rgba(240,191,81,.7)"
         ></v-img>
       </template>
 
@@ -70,9 +70,13 @@
 
       <template v-if="!($route.path === '/todo')" v-slot:extension>
         <v-tabs align-with-title>
-          <v-tab to="/">Accueil</v-tab>
+          <v-tab style="margin-left: 10px;" to="/">Accueil</v-tab>
           <v-tab to="/products">Notre sélection</v-tab>
-          <v-tab to="/sign-in">Connexion</v-tab>
+          <v-tab v-if="!currentUser" to="/sign-in">
+            <template v-if="!($route.path === '/sign-up')">Connexion</template>
+            <template v-else>Inscription</template>
+          </v-tab>
+          <!--<v-tab v-if="!currentUser" to="/sign-up">Inscription</v-tab>-->
         </v-tabs>
       </template>
     </v-app-bar>
@@ -98,11 +102,8 @@ export default {
     drawer: null,
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "Gestion de stock", icon: "mdi-format-list-checks", to: "/todo" },
-      { title: "Products", icon: "mdi-toolbox", to: "/products" },
-      { title: "Contact", icon: "mdi-phone", to: "/contact" },
-      { title: "Login", icon: "mdi-login", to: "/sign-in" },
-      { title: "Inscription", icon: "mdi-account-box", to: "/sign-up" },
+      { title: "Mes commandes", icon: "mdi-lock-clock", to: "/products" },
+      { title: "Gestion de stock", icon: "mdi-clipboard-list", to: "/todo" },
       { title: "Profil", icon: "mdi-account-box", to: "/account" },
     ]
   }),

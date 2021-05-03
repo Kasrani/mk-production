@@ -29,13 +29,21 @@
         ></v-text-field>
     </v-col>
     <v-btn
-      color="pink white--text"
+      color="#F0BF51"
       class="mr-4"
       @click="signUp"
     >
       Valider
     </v-btn>
   </form>
+  <v-col
+    cols="12"
+    sm="4"
+    class="mt-2"
+    style="margin: auto;"
+    >
+      Vous avez déja un compte ? <router-link to="/sign-in">Se connecter</router-link>
+  </v-col>
   <div v-if="error">
       <div>{{ error }}</div>
   </div>
@@ -60,6 +68,7 @@ export default {
             if(result.message) {
                 this.error = result.message
             } else {
+                this.$router.push('/home');
                 console.log('User created !');
             }
         }

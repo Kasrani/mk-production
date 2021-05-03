@@ -1,11 +1,5 @@
 <template>
-    <v-container fluid fill-height class="home-hero" style="max-height: 100vh;">
-        <v-layout justify-center align-center column pa-5>
-            <div class="title text-center font-weight-black white--text">MK-PRODUCTION</div>
-            <div class="title text-center font-weight-black white--text">DESIGN AND DEVELOPMENT</div>
-            <div class="subtitle-1 text-center font-weight-bold white--text">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
-            <v-btn class="mt-5 pink accent-3 white--text">Bonjour !</v-btn>
-        </v-layout>
+    <v-container fluid fill-height class="home-hero" style="max-height: 40vh;">
     </v-container>
 </template>
 
@@ -17,9 +11,12 @@ export default {
 
 <style scoped>
 .home-hero {
-    background: url('https://i.imgur.com/nK2Uq1J.jpg');
-    background-size: cover;
-    width: 100%;
+    background: url('https://i.imgur.com/fbG80rn.jpg');
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: center;
+    width: calc(100% - 40px);
     height: 100%;
+    margin: 20px;
 }
 </style>

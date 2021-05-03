@@ -29,13 +29,21 @@
         ></v-text-field>
     </v-col>
     <v-btn
-      color="pink white--text"
+      color="#F0BF51"
       class="mr-4"
       @click="signIn"
     >
       Connexion
     </v-btn>
   </form>
+  <v-col
+    cols="12"
+    sm="4"
+    class="mt-2"
+    style="margin: auto;"
+    >
+      Vous n'avez pas un compte ? <router-link to="/sign-up">S'inscrire</router-link>
+  </v-col>
   <div v-if="error">
       <div>{{ error }}</div>
   </div>
