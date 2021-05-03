@@ -1,12 +1,7 @@
 <template>
-    <v-container fluid>
-        <v-layout>
-            <h1></h1>
-            <div class="pa-6">
-                <h1>Services page</h1>
-            </div>
-        </v-layout>
-    </v-container>
+    <div class="mt-6 ml-6">
+        <h1>Page de services</h1>
+    </div>
 </template>
 <script>
 export default {

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home';
 import goTo from 'vuetify/es5/services/goto'
-import firebase from "firebase";
+import store from '../store/store';
 
 Vue.use(VueRouter);
 
@@ -31,14 +31,20 @@ const routes = [
         meta: {authRequired: true}
     },
     {
-        name: 'Login',
-        path: '/login',
-        component: () => import('../views/Login.vue')
+        name: 'SignIn',
+        path: '/sign-in',
+        component: () => import('../views/SignIn.vue')
     },
     {
-        name: 'Register',
-        path: '/register',
-        component: () => import('../views/Register.vue')
+        name: 'SignUp',
+        path: '/sign-up',
+        component: () => import('../views/SignUp.vue')
+    },
+    {
+        name: 'Account',
+        path: '/account',
+        component: () => import('../views/Account.vue'),
+        meta: {authRequired: true}
     },
 ];
 
@@ -57,19 +63,15 @@ router.afterEach(() => {
     goTo(0, { durantion: 0 })
 })
 
+
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.authRequired)) {
-      if (firebase.auth().currentUser) {
-        next();
-      } else {
+    if (to.meta.authRequired && !store.state.currentUser) {
         alert('You must be logged in to see this page');
         next({
-          path: '/',
-        });
-      }
+            path: '/sign-in'
+        })
     } else {
       next();
     }
   });
-
 export default router;

@@ -1,11 +1,7 @@
 <template>
-    <v-container fluid>
-        <v-layout>
-            <div class="pa-6">
-                <h1>Contact</h1>
-            </div>
-        </v-layout>
-    </v-container>
+    <div class="mt-6 ml-6">
+        <h1>Page de contact</h1>
+    </div>
 </template>
 <script>
 export default {

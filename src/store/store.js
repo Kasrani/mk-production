@@ -10,6 +10,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         appTitle: process.env.VUE_APP_TITLE,
+        currentUser: null,
         search: null,
         tasks: [
             //{
@@ -26,6 +27,9 @@ export default new Vuex.Store({
         sorting: false
     },
     mutations: {
+        setCurrentUser(state, payload) {
+            state.currentUser = payload
+        },
         setSearch(state, value) {
             state.search = value
         },

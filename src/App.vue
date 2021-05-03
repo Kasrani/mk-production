@@ -15,8 +15,10 @@
           >
         </v-avatar>
         <div class="white--text text-sibtitle-1 font-weight-bold">Mourad Kasrani</div>
-        <div class="white--text text-sibtitle-2">kasrani.mourad@gmail.com</div>
-        <v-btn v-if="currentUser" @click="logout">LogOut</v-btn>
+        <template v-if="currentUser">
+          <div class="white--text text-sibtitle-2">{{ currentUser.email }}</div>
+          <v-btn class="mt-2" @click="signOut" small>Se deconnecter</v-btn>
+        </template>
       </v-img>
 
       <v-list dense nav>
@@ -87,25 +89,11 @@ import Search from './components/Tools/Search.vue'
 import LiveDateTime from './components/Tools/LiveDateTime.vue'
 import FieldAddTask from './components/Todo/FieldAddTask.vue'
 import Snackbar from './components/global/Snackbar.vue'
-import firebase from 'firebase';
+import database from "./services/database";
+//import firebase from 'firebase';
 //import { tr } from 'date-fns/locale'
 
 export default {
-  /*
-  setup() {
-    onBeforeMount(() => {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (!user) {
-          //router.replace('/login')
-          //this.$route.path = '/login'
-          //console.log('nooooooooooooooooo')
-        } else if(this.$route.path =="/login" || this.$route.path == "/register") {
-          //router.replace('');
-          //this.$route.path = '/'
-        }
-      })
-    })
-  },*/
   data: () => ({
     drawer: null,
     items: [
@@ -113,10 +101,10 @@ export default {
       { title: "Missions", icon: "mdi-format-list-checks", to: "/todo" },
       { title: "Services", icon: "mdi-toolbox", to: "/services" },
       { title: "Contact", icon: "mdi-phone", to: "/contact" },
-      { title: "Login", icon: "mdi-login", to: "/login" },
-      { title: "Inscription", icon: "mdi-account-box", to: "/register" },
-    ],
-    currentUser: false
+      { title: "Login", icon: "mdi-login", to: "/sign-in" },
+      { title: "Inscription", icon: "mdi-account-box", to: "/sign-up" },
+      { title: "Profil", icon: "mdi-account-box", to: "/account" },
+    ]
   }),
   components: {
     Search,
@@ -124,10 +112,20 @@ export default {
     'filed-add-task': FieldAddTask,
     Snackbar
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.currentUser
+    }
+  },
   mounted() {
     this.$store.dispatch('getTasks')
   },
   methods: {
+    async signOut() {
+      await database.signOut()
+      this.$router.push('/sign-in');
+    }
+    /*
     logout() {
       firebase
         .auth()
@@ -141,6 +139,7 @@ export default {
           this.$router.push('/');
         });
     },
+    */
   },
 };
 </script>
