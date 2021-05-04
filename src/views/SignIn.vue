@@ -24,7 +24,6 @@
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             label="Mot de passe"
-            hint="Au moins 8 caractères"
             counter
         ></v-text-field>
     </v-col>

@@ -6,7 +6,7 @@
         class="pa-4 pt-7"
         src="images/friperie.jpg"
         :height="$route.path === '/todo' ? '220' : '198'"
-        gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+        gradient="to top right, rgba(100,115,201,.3), rgba(240,191,81,.7)"
       >
         <v-avatar size="50" class="mb-3">
           <img
@@ -14,10 +14,27 @@
             alt="Mourad"
           >
         </v-avatar>
-        <div class="white--text text-sibtitle-1 font-weight-bold">Mourad Kasrani</div>
         <template v-if="currentUser">
           <div class="white--text text-sibtitle-2">{{ currentUser.email }}</div>
-          <v-btn class="mt-2" @click="signOut" small>Se deconnecter</v-btn>
+          <v-row>
+            <v-chip
+              v-show="(currentUser.email === 'admin@mk-vintage.fr')"
+              class="ma-3 mt-5"
+              color="green"
+              text-color="white"
+              x-small>
+              Admin
+            </v-chip>
+            <v-chip
+              v-show="(currentUser.email !== 'admin@mk-vintage.fr')"
+              class="ma-3 mt-5"
+              color="green"
+              text-color="white"
+              x-small>
+              Client
+            </v-chip>
+          </v-row>
+          <v-btn class="mt-3" @click="signOut" small>Se deconnecter</v-btn>
         </template>
       </v-img>
 
@@ -60,7 +77,9 @@
           <v-toolbar-title class="text-h4 ml-3">{{ $store.state.appTitle }}</v-toolbar-title>
         </v-row>
         <v-row>
-          <live-data-time />
+          <!-- Live data time -->
+          <live-data-time v-if="currentUser && (currentUser.email === 'admin@mk-vintage.fr')" />
+          <div v-else class="text-h5 ml-3">Bienvenue !</div>
         </v-row>
         <v-row v-if="$route.path === '/todo'">
           <!-- Add task filed -->
@@ -102,8 +121,8 @@ export default {
     drawer: null,
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "Mes commandes", icon: "mdi-lock-clock", to: "/products" },
       { title: "Gestion de stock", icon: "mdi-clipboard-list", to: "/todo" },
+      { title: "Vos commandes", icon: "mdi-lock-clock", to: "/orders" },
       { title: "Profil", icon: "mdi-account-box", to: "/account" },
     ]
   }),
