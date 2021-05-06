@@ -112,16 +112,13 @@ import Search from './components/Tools/Search.vue'
 import LiveDateTime from './components/Tools/LiveDateTime.vue'
 import FieldAddTask from './components/Todo/FieldAddTask.vue'
 import Snackbar from './components/global/Snackbar.vue'
-//import { db } from './firebase'
-//import firebase from 'firebase';
-//import { tr } from 'date-fns/locale'
 
 export default {
   data: () => ({
     drawer: null,
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "Ajouter un produit", icon: "mdi-bookmark-plus", to: "/products" },
+      { title: "Gestion de stock", icon: "mdi-bookmark-plus", to: "/products" },
       { title: "Taches", icon: "mdi-note-plus", to: "/todo" },
       { title: "Vos commandes", icon: "mdi-lock-clock", to: "/orders" },
       { title: "Profil", icon: "mdi-account-box", to: "/account" },

@@ -1,194 +1,118 @@
-<!--
 <template>
-  <div class="mt-6 ml-6">
-    <div class="mt-6 ml-6">
-      <h2>Gestion des produits :</h2>
-      <v-col cols="12" md="4">
-        <v-text-field v-model="product.name" label="Nom" required></v-text-field>
-      </v-col>
-      <v-col cols="12" sm="4">
-        <v-text-field v-model="product.price" label="Prix"></v-text-field>
-      </v-col>
-      <v-btn @click="addProduct" color="#F0BF51" class="ml-3">
-        Créer un article
-      </v-btn>
-    </div>
-  </div>
-</template>
-<script>
-import { db } from "../firebase";
-export default {
-  name: "Products",
-  data() {
-    return {
-      product: {
-        name: null,
-        price: null,
-      }
-    };
-  },
-  methods: {
-    addProduct() {
-      db.collection("products").add(this.product)
-      .then((docRef) => {
-        console.log("Product written with ID: ", docRef.id);
-        this.reset();
-      })
-      .catch((error) => {
-        console.error("Error adding product: ", error);
-      })
-    },
-    reset() {
-      Object.assign(this.$data, this.$options.data.apply(this));
-    }
-  },
-};
-</script>
-<style scoped>
-</style>
--->
-
-
-<template>
-    <v-data-table
-    :headers="headers"
-    :items="products"
-    :item-key="id"
-    sort-by="price"
-    class="elevation-1"
-  >
-  <template v-slot:top>
-      <v-toolbar
-        flat
-      >
-        <v-toolbar-title>Mes Produits</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog
-          v-model="dialog"
-          max-width="500px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              small
-              color="amber darken-3"
-              dark
-              class="mb-2"
-              v-bind="attrs"
-              v-on="on"
-            >
-              Ajouter un article
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="product.name"
-                      label="Nom"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="product.mark"
-                      label="Marque"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="product.price"
-                      label="Prix"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="grey lighten-1"
-                text
-                @click="close"
-              >
-                Annuler
-              </v-btn>
-              <v-btn
-                color="amber darken-3"
-                text
-                @click="addProduct"
-              >
-                Enregistrer
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editProduct(item.id)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-dialog v-model="dialogDelete" max-width="500px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="red lighten-2"
-              dark
-              icon
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-icon small>mdi-delete</v-icon>
-            </v-btn>
-          </template>
-
-          <v-card>
-            <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="grey lighten-1" text @click="closeDelete">Annuler</v-btn>
-              <v-btn color="amber darken-3" text @click="deleteProduct(item.id)">Supprimer</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-    </template>
-    <template v-slot:no-data>
+  <div class="ma-5">
+    <!-- add product modal -->
+    <v-dialog v-model="dialog" max-width="500px">
+    <template v-slot:activator="{ on, attrs }">
       <v-btn
         small
         color="amber darken-3"
+        dark
+        class="mb-2"
+        v-bind="attrs"
+        v-on="on"
       >
-        Refresh
+        Ajouter un article
       </v-btn>
     </template>
-</v-data-table>
+    <v-card>
+        <v-card-title>
+        <span class="headline">Ajouter un article</span>
+        </v-card-title>
+        <v-card-text>
+        <v-container grid-list-md>
+            <v-layout wrap>
+            <v-flex xs12 sm6 md4>
+                <v-text-field v-model="product.name" label="Nom"></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm6 md4>
+                <v-text-field v-model="product.mark" label="Marque"></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm6 md4>
+                <v-text-field v-model="product.price" label="Prix"></v-text-field>
+            </v-flex>
+            </v-layout>
+        </v-container>
+        </v-card-text>
+        <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="grey lighten-1" text @click="close">Annuler</v-btn>
+        <v-btn color="amber darken-3" text @click="addProduct">Enregistrer</v-btn>
+        </v-card-actions>
+    </v-card>
+    </v-dialog>
+
+    <!-- Edit product modal -->
+    <v-dialog v-model="dialogEdit" max-width="500px">
+    <v-card>
+        <v-card-title>
+        <span class="headline">Modifier l'article</span>
+        </v-card-title>
+        <v-card-text>
+        <v-container grid-list-md>
+            <v-layout wrap>
+            <v-flex xs12 sm6 md4>
+                <v-text-field v-model="editedProduct.name" label="Nom"></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm6 md4>
+                <v-text-field v-model="editedProduct.mark" label="Marque"></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm6 md4>
+                <v-text-field v-model="editedProduct.price" label="Prix"></v-text-field>
+            </v-flex>
+            </v-layout>
+        </v-container>
+        </v-card-text>
+        <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="grey lighten-1" text @click="closeEdit">Annuler</v-btn>
+        <v-btn color="amber darken-3" text @click="updateProduct">Enregistrer</v-btn>
+        </v-card-actions>
+    </v-card>
+    </v-dialog>
+
+    <!-- Edit product modal -->
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">Êtes-vous sûr de bien vouloir supprimer ce produit?</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="grey lighten-1" text @click="closeDelete">Annuler</v-btn>
+          <v-btn color="amber darken-3" text @click="deleteProduct">Supprimer</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <!-- data table -->
+    <v-data-table :headers="headers" :items="products" item-key="id" class="elevation-1">
+    <template v-slot:item.actions="props">
+      <!--
+        <td>{{ props.item.name }}</td>
+        <td class="text-xs-right">{{ props.item.mark }}</td>
+        <td class="text-xs-right">{{ props.item.price }}</td>
+        -->
+        <td class="">
+        <v-btn
+            color="green lighten-2"
+            dark
+            icon
+            @click="setEditProduct(props.item)"
+        >
+            <v-icon small>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn
+          color="red lighten-2"
+          dark
+          icon
+          @click="setDeleteProduct(props.item)"
+        >
+            <v-icon small>mdi-delete</v-icon>
+        </v-btn>
+        </td>
+    </template>
+    </v-data-table>
+</div>
 </template>
+
 <script>
 import { db } from "../firebase";
 export default {
@@ -196,13 +120,15 @@ export default {
   data() {
     return {
       product: {
-        name: null,
-        mark: null,
-        price: null,
+        name: '',
+        mark: '',
+        price: '',
       },
       products: [],
+      activeItem: null,
       dialog: false,
       dialogDelete: false,
+      dialogEdit: false,
       headers: [
           {
             text: 'Nom',
@@ -215,7 +141,7 @@ export default {
           { text: 'Actions', value: 'actions', sortable: false },
         ],
         editedIndex: -1,
-        editedItem: {
+        editedProduct: {
             name: '',
             price: 0,
             mark: '',
@@ -228,79 +154,13 @@ export default {
     };
   },
 
-  computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
-    },
-
-    watch: {
-      dialog (val) {
-        val || this.close()
-      },
-      dialogDelete (val) {
-        val || this.closeDelete()
-      },
-    },
-
-
-  methods: {
-      addProduct() {
-        db.collection("products").add(this.product)
-        .then((docRef) => {
-          console.log("Product written with ID: ", docRef.id);
-          this.reset();
-        })
-        .catch((error) => {
-          console.error("Error adding product: ", error);
-        })
-        this.close()
-      },
-      refreshList() {
-        this.addProduct();
-      },
-
-      reset() {
-        Object.assign(this.$data, this.$options.data.apply(this));
-      },
- 
-      // edit product
-      editProduct() {
-        
-      },
-      // delete product
-      deleteProduct(doc) {
-        this.$emit('deleteProduct', doc);
-        db.collection("products").doc(doc).delete().then(() => {
-            console.log("Document successfully deleted!");
-        }).catch((error) => {
-            console.error("Error removing document: ", error);
-        });
-        this.refreshList();
-        this.dialogDelete = false;
-      },
-      // delete product validation
-      closeDelete() {
-        this.dialogDelete = false;
-      },
-
-      // close modal
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      }, 
-  },
+  // load product
   created() {
     db.collection("products")
       .get()
       .then((querySnapshot) => {
         //this.products = querySnapshot;
         querySnapshot.forEach((doc) => {
-          //this.products.push(doc);
-          //console.log(doc.id, " => ", doc.data());
           let product = doc.data()
           product.id = doc.id
           this.products.push(product)
@@ -309,6 +169,103 @@ export default {
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
+  },
+
+    methods: {
+      // Realetime update
+      wathcher() {
+        db.collection("products").onSnapshot((querySnapshot) => {
+            this.products = [];
+            querySnapshot.forEach((doc) => {
+                let product = doc.data()
+                product.id = doc.id
+                this.products.push(product)
+            });  
+        });
+      },
+
+      // add product
+      addProduct() {
+        db.collection("products").add(this.product)
+        .then((docRef) => {
+          console.log("Product written with ID: ", docRef.id);
+          this.reset();
+          this.wathcher();
+        })
+        .catch((error) => {
+          console.error("Error adding product: ", error);
+        })
+        this.close()
+      },
+      
+      // reset form
+      reset() {
+        Object.assign(this.$data, this.$options.data.apply(this));
+      },
+ 
+      // edit product
+      setEditProduct(doc) {
+          this.dialogEdit = true;
+          this.editedProduct.name = doc.name;
+          this.editedProduct.mark = doc.mark;
+          this.editedProduct.price = doc.price;
+          this.activeItem = doc.id;
+      },
+
+      // update product
+      updateProduct(){
+        db.collection("products").doc(this.activeItem).update({
+            name: this.editedProduct.name,
+            mark: this.editedProduct.mark,
+            price: this.editedProduct.price
+        })
+        .then(() => {
+            console.log("Document successfully updated!");
+            this.dialogEdit = false;
+            this.wathcher();
+            //location.reload();
+        })
+        .catch((error) => {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+      },
+
+      // Select product for delete
+      setDeleteProduct(doc) {
+        this.dialogDelete = true;
+        this.activeItem = doc.id;
+      },
+
+      // Delete product
+      deleteProduct() {
+        console.log(this.activeItem);
+        db.collection("products").doc(this.activeItem).delete().then(() => {
+            this.dialogDelete = false;
+            console.log("Document successfully deleted!");
+            this.wathcher();
+            //location.reload();
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+      },
+
+      // delete product validation
+      closeDelete() {
+        this.dialogDelete = false;
+      },
+      closeEdit() {
+        this.dialogEdit = false;
+      },
+      
+      // close modal
+      close () {
+        this.dialog = false
+        this.$nextTick(() => {
+          this.editedProduct = Object.assign({}, this.defaultProduct)
+          this.editedIndex = -1
+        })
+      }, 
   },
 };
 </script>
