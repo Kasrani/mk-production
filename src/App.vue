@@ -1,7 +1,7 @@
   
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-if="currentUser" v-model="drawer" :mobile-breakpoint="768" app>
+    <v-navigation-drawer v-if="currentUser" v-show="currentUser" v-model="drawer" :mobile-breakpoint="768" app>
       <v-img
         class="pa-4 pt-7"
         src="images/friperie.jpg"
@@ -18,7 +18,7 @@
           <div class="white--text text-sibtitle-2">{{ currentUser.email }}</div>
           <v-row>
             <v-chip
-              v-show="(currentUser.email === 'admin@mk-vintage.fr')"
+              v-show="currentUser && (currentUser.email === 'admin@mk-vintage.fr')"
               class="ma-3 mt-5"
               color="green"
               text-color="white"
@@ -26,7 +26,7 @@
               Admin
             </v-chip>
             <v-chip
-              v-show="(currentUser.email !== 'admin@mk-vintage.fr')"
+              v-show="currentUser && (currentUser.email !== 'admin@mk-vintage.fr')"
               class="ma-3 mt-5"
               color="green"
               text-color="white"
@@ -90,7 +90,7 @@
       <template v-if="!($route.path === '/todo')" v-slot:extension>
         <v-tabs align-with-title>
           <v-tab style="margin-left: 10px;" to="/">Accueil</v-tab>
-          <v-tab to="/products">Notre sélection</v-tab>
+          <v-tab to="/product-list">Notre sélection</v-tab>
           <v-tab v-if="!currentUser" to="/sign-in">
             <template v-if="!($route.path === '/sign-up')">Connexion</template>
             <template v-else>Inscription</template>
@@ -112,7 +112,7 @@ import Search from './components/Tools/Search.vue'
 import LiveDateTime from './components/Tools/LiveDateTime.vue'
 import FieldAddTask from './components/Todo/FieldAddTask.vue'
 import Snackbar from './components/global/Snackbar.vue'
-import database from "./services/database";
+//import { db } from './firebase'
 //import firebase from 'firebase';
 //import { tr } from 'date-fns/locale'
 
@@ -121,7 +121,8 @@ export default {
     drawer: null,
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "Gestion de stock", icon: "mdi-clipboard-list", to: "/todo" },
+      { title: "Ajouter un produit", icon: "mdi-bookmark-plus", to: "/products" },
+      { title: "Taches", icon: "mdi-note-plus", to: "/todo" },
       { title: "Vos commandes", icon: "mdi-lock-clock", to: "/orders" },
       { title: "Profil", icon: "mdi-account-box", to: "/account" },
     ]
@@ -141,9 +142,8 @@ export default {
     this.$store.dispatch('getTasks')
   },
   methods: {
-    async signOut() {
-      await database.signOut()
-      this.$router.push('/sign-in');
+    signOut() {
+      this.$store.dispatch('signOut')
     }
     /*
     logout() {

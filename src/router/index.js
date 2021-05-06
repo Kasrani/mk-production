@@ -1,7 +1,15 @@
+/*
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import goTo from 'vuetify/es5/services/goto'
 import store from '../store/store';
+*/
+
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import goTo from 'vuetify/es5/services/goto'
+import store from '../store';
+//import { auth } from '../firebase'
 
 Vue.use(VueRouter);
 
@@ -29,10 +37,9 @@ const routes = [
         meta: {authRequired: true}
     },
     {
-        name: 'Contact',
-        path: '/contact',
-        component: () => import('../views/Contact.vue'),
-        meta: {authRequired: true}
+        name: 'ProductList',
+        path: '/product-list',
+        component: () => import('../views/ProductList.vue'),
     },
     {
         name: 'SignIn',
@@ -58,6 +65,7 @@ const router = new VueRouter({
     routes
 });
 
+
 router.beforeEach((to, from, next) => {
     document.title = `${ process.env.VUE_APP_TITLE } - ${ to.name }`
     next()
@@ -70,7 +78,7 @@ router.afterEach(() => {
 
 router.beforeEach((to, from, next) => {
     if (to.meta.authRequired && !store.state.currentUser) {
-        alert('You must be logged in to see this page');
+        //alert('You must be logged in to see this page');
         next({
             path: '/sign-in'
         })
@@ -78,4 +86,16 @@ router.beforeEach((to, from, next) => {
       next();
     }
   });
+
+/*
+router.beforeEach((to, from, next) => {
+    const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
+  
+    if (requiresAuth && !auth.currentUser) {
+      next('/sign-in')
+    } else {
+      next()
+    }
+  })
+  */
 export default router;

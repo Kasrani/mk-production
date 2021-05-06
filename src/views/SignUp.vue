@@ -8,6 +8,17 @@
         style="margin: auto;"
     >
         <v-text-field
+            v-model="name"
+            label="Nom complet"
+            required
+        ></v-text-field>
+    </v-col>
+    <v-col
+        cols="12"
+        md="4"
+        style="margin: auto;"
+    >
+        <v-text-field
             v-model="email"
             label="E-mail"
             required
@@ -50,7 +61,7 @@
 </div>
 </template>
 <script>
-import database from "../services/database";
+//import { db } from '../db'
 export default {
 
     name: "SignUp",
@@ -58,19 +69,18 @@ export default {
     return { 
         email: '', 
         password: '', 
+        name: '',
         error: '',
         show1: false,
     }; 
     },
     methods: {
-        async signUp() {
-            let result = await database.signUp(this.email, this.password)
-            if(result.message) {
-                this.error = result.message
-            } else {
-                this.$router.push('/home');
-                console.log('User created !');
-            }
+        signUp() {
+          this.$store.dispatch('signUp', {
+            email: this.email,
+            password: this.password,
+            name: this.name,
+          })
         }
     },
 };

@@ -2,8 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Localbase from 'localbase'
 
-let db = new Localbase('db')
-db.config.debug = false
+import * as fb from '../firebase'
+import router from '../router/index'
+
+let database = new Localbase('database')
+database.config.debug = false
 
 Vue.use(Vuex)
 
@@ -73,6 +76,51 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async signIn({ dispatch }, form) {
+            // sign user in
+            const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password)
+        
+            // fetch user profile and set in state
+            dispatch('fetchUserProfile', user)
+            },
+            async fetchUserProfile({ commit }, user) {
+            // fetch user profile
+            const userProfile = await fb.usersCollection.doc(user.uid).get()
+        
+            // set user profile in state
+            commit('setCurrentUser', userProfile.data())
+            
+            // change route to account
+            if (router.currentRoute.path === '/sign-in') {
+                router.push('/account')
+            }
+        },
+        async signUp({ dispatch }, form) {
+            // sign user up
+            const { user } = await fb.auth.createUserWithEmailAndPassword(form.email, form.password)
+          
+            // create user profile object in userCollections
+            await fb.usersCollection.doc(user.uid).set({
+              name: form.name,
+              email: form.email,
+              //password: form.password,
+            })
+          
+            // fetch user profile and set in state
+            dispatch('fetchUserProfile', user)
+        },
+        async signOut({ commit }) {
+            location.reload();
+            await fb.auth.signOut()
+          
+            // clear userProfile and redirect to /sign-in
+            commit('setCurrentUser', {})
+            router.push('/')
+        },
+        
+
+        // add product
+        
         addTask({ commit }, newTaskTitle) {
             let newTask = {
                 id: Date.now(),
@@ -80,27 +128,27 @@ export default new Vuex.Store({
                 done: false,
                 dueDate: null
             }
-            db.collection('tasks').add(newTask).then(() => {
+            database.collection('tasks').add(newTask).then(() => {
                 commit('addTask', newTask)
                 commit('showSnackbar', 'Tache ajoutée !')
             })
         },
         doneTask({ state, commit }, id) {
             let task = state.tasks.filter((task) => task.id === id)[0]
-            db.collection('tasks').doc({ id: id }).update({
+            database.collection('tasks').doc({ id: id }).update({
                 done: !task.done
             }).then(() => {
                 commit('doneTask', id)
             })
         },
         deleteTask({ commit }, id) {
-            db.collection('tasks').doc({ id: id }).delete().then(() => {
+            database.collection('tasks').doc({ id: id }).delete().then(() => {
                 commit('deleteTask', id)
                 commit('showSnackbar', 'Tache supprimée !')
             })
         },
         updateTaskTitle({ commit }, payload) {
-            db.collection('tasks').doc({ id: payload.id }).update({
+            database.collection('tasks').doc({ id: payload.id }).update({
                 title: payload.title
             }).then(() => {
                 commit('updateTaskTitle', payload)
@@ -108,7 +156,7 @@ export default new Vuex.Store({
             })
         },
         updateTaskDueDate({ commit }, payload) {
-            db.collection('tasks').doc({ id: payload.id }).update({
+            database.collection('tasks').doc({ id: payload.id }).update({
                 dueDate: payload.dueDate
             }).then(() => {
                 commit('updateTaskDueDate', payload)
@@ -116,11 +164,11 @@ export default new Vuex.Store({
             })
         },
         setTasks({ commit }, tasks) {
-            db.collection('tasks').set(tasks)
+            database.collection('tasks').set(tasks)
             commit('setTasks', tasks)
         },
         getTasks({ commit }) {
-            db.collection('tasks').get().then(tasks => {
+            database.collection('tasks').get().then(tasks => {
                 commit('setTasks', tasks)
             })
         }
