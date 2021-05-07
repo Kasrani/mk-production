@@ -58,6 +58,7 @@ export default db
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 // firebase init - add your own config here
 const firebaseConfig = {
@@ -70,7 +71,8 @@ const firebaseConfig = {
     appId: "1:597137251934:web:596547a7174d9afc219ecf",
     measurementId: "G-TVDREF4661"
 }
-firebase.initializeApp(firebaseConfig)
+
+const fb = firebase.initializeApp(firebaseConfig)
 
 // utils
 const db = firebase.firestore()
@@ -86,6 +88,7 @@ const likesCollection = db.collection('likes')
 export {
   db,
   auth,
+  fb,
   usersCollection,
   postsCollection,
   commentsCollection,

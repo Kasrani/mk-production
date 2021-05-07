@@ -1,7 +1,7 @@
 <template>
   <div class="ma-5">
     <!-- add product modal -->
-    <v-dialog v-model="dialog" max-width="500px">
+    <v-dialog v-model="dialog" max-width="800px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         small
@@ -30,7 +30,49 @@
             <v-flex xs12 sm6 md4>
                 <v-text-field v-model="product.price" label="Prix"></v-text-field>
             </v-flex>
+            <v-flex xs12 sm6 md4>
+                <v-btn
+                  small
+                  block
+                  class="amber darken-3"
+                  @click="onPickImage">
+                    <v-icon left>
+                      mdi-cloud-upload
+                    </v-icon>
+                    Importer les photos
+                </v-btn>
+                <input
+                  type="file"
+                  style="display: none;"
+                  ref="fileInput"
+                  accept="image/*"
+                  @change="uploadImage"
+                />
+            </v-flex>
+            
             </v-layout>
+            <v-row class="mt-1">
+              <div v-for="(image, index) in product.images" :key="index">
+
+                <v-col>
+
+                <v-img
+                  max-height="100"
+                  max-width="150"
+                  :src="image"
+                ></v-img>
+                <v-btn
+                  color="grey lighten-1"
+                  fab
+                  x-small
+                  @click="deleteImage(image, index)"
+                >
+                  <v-icon color="white">mdi-delete</v-icon>
+                </v-btn>
+
+                </v-col>
+              </div>
+            </v-row>
         </v-container>
         </v-card-text>
         <v-card-actions>
@@ -42,7 +84,7 @@
     </v-dialog>
 
     <!-- Edit product modal -->
-    <v-dialog v-model="dialogEdit" max-width="500px">
+    <v-dialog v-model="dialogEdit" max-width="800px">
     <v-card>
         <v-card-title>
         <span class="headline">Modifier l'article</span>
@@ -59,7 +101,48 @@
             <v-flex xs12 sm6 md4>
                 <v-text-field v-model="editedProduct.price" label="Prix"></v-text-field>
             </v-flex>
+            <v-flex xs12 sm6 md4>
+                <v-btn
+                  small
+                  block
+                  class="amber darken-3"
+                  @click="onPickImage">
+                    <v-icon left>
+                      mdi-cloud-upload
+                    </v-icon>
+                    Importer les photos
+                </v-btn>
+                <input
+                  type="file"
+                  style="display: none;"
+                  ref="fileInput"
+                  accept="image/*"
+                  @change="uploadImage"
+                />
+            </v-flex>
             </v-layout>
+            <v-row class="mt-1">
+              <div v-for="(image, index) in editedProduct.images" :key="index">
+
+                <v-col>
+
+                <v-img
+                  max-height="100"
+                  max-width="150"
+                  :src="image"
+                ></v-img>
+                <v-btn
+                  color="grey lighten-1"
+                  fab
+                  x-small
+                  @click="deleteImage(image, index)"
+                >
+                  <v-icon color="white">mdi-delete</v-icon>
+                </v-btn>
+
+                </v-col>
+              </div>
+            </v-row>
         </v-container>
         </v-card-text>
         <v-card-actions>
@@ -90,6 +173,7 @@
         <td class="text-xs-right">{{ props.item.mark }}</td>
         <td class="text-xs-right">{{ props.item.price }}</td>
         -->
+        <!--<td><v-img max-width="100" max-height="150" :src="{{props.item.images}}"></v-img></td>-->
         <td class="">
         <v-btn
             color="green lighten-2"
@@ -114,7 +198,7 @@
 </template>
 
 <script>
-import { db } from "../firebase";
+import { db, fb } from "../firebase";
 export default {
   name: "ProductList",
   data() {
@@ -123,6 +207,7 @@ export default {
         name: '',
         mark: '',
         price: '',
+        images: []
       },
       products: [],
       activeItem: null,
@@ -138,6 +223,7 @@ export default {
           },
           { text: 'Marque', value: 'mark' },
           { text: 'Prix', value: 'price' },
+          //{ text: 'Images', value: 'images' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
         editedIndex: -1,
@@ -145,33 +231,78 @@ export default {
             name: '',
             price: 0,
             mark: '',
+            images: []
         },
         defaultItem: {
             name: '',
             price: 0,
             mark: '',
+            images: []
         },
     };
   },
 
   // load product
-  created() {
-    db.collection("products")
-      .get()
-      .then((querySnapshot) => {
-        //this.products = querySnapshot;
-        querySnapshot.forEach((doc) => {
-          let product = doc.data()
-          product.id = doc.id
-          this.products.push(product)
+    created() {
+      db.collection("products")
+        .get()
+        .then((querySnapshot) => {
+          //this.products = querySnapshot;
+          querySnapshot.forEach((doc) => {
+            let product = doc.data()
+            product.id = doc.id
+            this.products.push(product)
+          });
+        })
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
         });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  },
+    },
 
     methods: {
+      // Delete image
+      deleteImage(img, index) {
+
+        let image = fb.storage().refFromURL(img);
+        this.product.images.splice(index, 1);
+        image.delete().then(() => {
+          console.log('image deleted');
+        }).catch((error) => {
+          console.log(error);
+        })
+      },
+
+      // On pick image
+      onPickImage() {
+        this.$refs.fileInput.click()
+      },
+
+      // Upload images
+      uploadImage(e) {
+
+        let file = e.target.files[0];
+
+        var storageRef = fb.storage().ref('products/'+ file.name);
+
+        let uploadTask = storageRef.put(file);
+
+        uploadTask.on('state_changed', (snapshot) => {
+            console.log(snapshot);
+          }, 
+          (error) => {
+            // Handle unsuccessful uploads
+            console.log(error);
+          }, 
+          () => {
+            // Handle successful uploads on complete
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              this.product.images.push(downloadURL)
+              console.log('File available at', downloadURL);
+            });
+          }
+        );
+      },
+
       // Realetime update
       wathcher() {
         db.collection("products").onSnapshot((querySnapshot) => {
@@ -209,6 +340,8 @@ export default {
           this.editedProduct.name = doc.name;
           this.editedProduct.mark = doc.mark;
           this.editedProduct.price = doc.price;
+          this.editedProduct.images = doc.images;
+          //console.log(this.editedProduct.images)
           this.activeItem = doc.id;
       },
 
@@ -217,7 +350,8 @@ export default {
         db.collection("products").doc(this.activeItem).update({
             name: this.editedProduct.name,
             mark: this.editedProduct.mark,
-            price: this.editedProduct.price
+            price: this.editedProduct.price,
+            images: this.editedProduct.images
         })
         .then(() => {
             console.log("Document successfully updated!");
