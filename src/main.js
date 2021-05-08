@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
-import firebase from 'firebase/app'
+import { fb } from "./firebase";
 import 'firebase/auth'
 import 'firebase/firestore'
 import VueFirestore from 'vue-firestore'
@@ -38,7 +38,7 @@ const initialize = () => {
   }
 }
 
-firebase.auth().onAuthStateChanged(user => {
+fb.auth().onAuthStateChanged(user => {
   if(user) {
     store.commit('setCurrentUser', user)
   } else {

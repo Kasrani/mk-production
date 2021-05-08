@@ -108,7 +108,7 @@
 </template>
 
 <script>
-//import { fb } from "./firebase";
+import { fb } from "./firebase";
 import Search from './components/Tools/Search.vue'
 import LiveDateTime from './components/Tools/LiveDateTime.vue'
 import FieldAddTask from './components/Todo/FieldAddTask.vue'
@@ -147,7 +147,15 @@ export default {
   },
   methods: {
     signOut() {
-      this.$store.dispatch('signOut')
+      //this.$store.dispatch('signOut')
+      fb.auth().signOut()
+      .then(() => {
+        // user conected
+        this.$router.replace('/');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     }
     /*
     logout() {

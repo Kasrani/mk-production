@@ -95,6 +95,8 @@ export default new Vuex.Store({
                 router.push('/account')
             }
         },
+
+        /*
         async signOut({ commit }) {
             location.reload();
             await fb.auth.signOut()
@@ -103,9 +105,9 @@ export default new Vuex.Store({
             commit('setCurrentUser', {})
             router.push('/')
         },
-        
+        */
 
-        // add product
+        // add task
         
         addTask({ commit }, newTaskTitle) {
             let newTask = {

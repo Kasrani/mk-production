@@ -1,15 +1,8 @@
-/*
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import goTo from 'vuetify/es5/services/goto'
-import store from '../store/store';
-*/
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import goTo from 'vuetify/es5/services/goto'
-import store from '../store';
-//import { auth } from '../firebase'
+//import store from '../store';
+import { fb } from "../firebase";
 
 Vue.use(VueRouter);
 
@@ -23,19 +16,19 @@ const routes = [
         name: 'Todo',
         path: '/todo',
         component: () => import('../views/Todo.vue'),
-        meta: {authRequired: true}
+        meta: {requiresAuth: true}
     },
     {
         name: 'Products',
         path: '/products',
         component: () => import('../views/Products.vue'),
-        meta: {authRequired: true}
+        meta: {requiresAuth: true}
     },
     {
         name: 'Orders',
         path: '/orders',
         component: () => import('../views/Orders.vue'),
-        meta: {authRequired: true}
+        meta: {requiresAuth: true}
     },
     {
         name: 'ProductList',
@@ -56,13 +49,13 @@ const routes = [
         name: 'Account',
         path: '/account',
         component: () => import('../views/Account.vue'),
-        meta: {authRequired: true}
+        meta: {requiresAuth: true}
     },
 ];
 
 const router = new VueRouter({
     mode: 'history',
-    base: '',
+    base: process.env.BASE_URL,
     routes
 });
 
@@ -76,7 +69,7 @@ router.afterEach(() => {
     goTo(0, { durantion: 0 })
 })
 
-
+/*
 router.beforeEach((to, from, next) => {
     if (to.meta.authRequired && !store.state.currentUser) {
         //alert('You must be logged in to see this page');
@@ -87,16 +80,17 @@ router.beforeEach((to, from, next) => {
       next();
     }
   });
+*/
 
-/*
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
+    const currentUser = fb.auth().currentUser
   
-    if (requiresAuth && !auth.currentUser) {
-      next('/sign-in')
+    if (requiresAuth && !currentUser) {
+      next('/')
     } else {
       next()
     }
   })
-  */
+
 export default router;
