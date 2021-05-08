@@ -17,6 +17,7 @@
                     </v-list-item-title>
                     <v-list-item-subtitle>{{ item.productPrice | currencyEuro }}</v-list-item-subtitle>
                     <v-list-item-subtitle>Quantité : {{ item.productQuantity }}</v-list-item-subtitle>
+                    <v-btn @click="$store.commit('removeFromCart', item)" class="mt-2" x-small>Supprimer l'article</v-btn>
                     </v-list-item-content>
                     
                     <v-list-item-action>

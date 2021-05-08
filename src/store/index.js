@@ -42,6 +42,11 @@ export default new Vuex.Store({
         saveData(state) {
             window.localStorage.setItem('cart', JSON.stringify(state.cart));
         },
+        removeFromCart(state, item) {
+            let index = state.cart.indexOf(item);
+            state.cart.splice(index, 1);
+            this.commit('saveData');
+        },
         openModalToCart(state) {
             state.showCart.show = true
             //state.cart.push(dialog);
