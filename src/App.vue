@@ -71,7 +71,17 @@
         <v-row>
           <v-app-bar-nav-icon v-if="currentUser" @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
           <v-spacer></v-spacer>
+          <!-- search bar -->
           <search />
+
+          <!-- Cart icon -->
+          <v-btn icon  @click.stop="$store.state.showCart.show = true" class="mt-3 mr-2">
+            <v-icon>mdi-cart-arrow-right</v-icon>
+          </v-btn>
+
+          <!-- Cart modal -->
+          <mini-cart :visible="showCart" @close="$store.state.showCart.show = false"></mini-cart>
+
         </v-row>
         <v-row>
           <v-toolbar-title class="text-h4 ml-3">{{ $store.state.appTitle }}</v-toolbar-title>
@@ -113,10 +123,12 @@ import Search from './components/Tools/Search.vue'
 import LiveDateTime from './components/Tools/LiveDateTime.vue'
 import FieldAddTask from './components/Todo/FieldAddTask.vue'
 import Snackbar from './components/global/Snackbar.vue'
+import MiniCart from './components/global/MiniCart';
 
 export default {
   data: () => ({
     drawer: null,
+    //showCart: this.$store.state.showCart.show,
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
       { title: "Gestion de stock", icon: "mdi-bookmark-plus", to: "/products" },
@@ -134,10 +146,14 @@ export default {
   components: {
     Search,
     "live-data-time": LiveDateTime,
-    'filed-add-task': FieldAddTask,
+    "filed-add-task": FieldAddTask,
+    "mini-cart": MiniCart,
     Snackbar
   },
   computed: {
+    showCart() {
+      return this.$store.state.showCart.show
+    },
     currentUser() {
       return this.$store.state.currentUser
     }

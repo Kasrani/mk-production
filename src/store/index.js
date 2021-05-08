@@ -14,6 +14,10 @@ export default new Vuex.Store({
     state: {
         appTitle: process.env.VUE_APP_TITLE,
         currentUser: null,
+        cart: [],
+        showCart: {
+            show: false,
+        },
         search: null,
         tasks: [
             //{
@@ -30,6 +34,18 @@ export default new Vuex.Store({
         sorting: false
     },
     mutations: {
+        addToCart(state, item) {
+            let found = state.cart.find(product => product.productId == item.productId);   
+            if(found) {
+                found.productQuantity++;   
+            } else {
+                state.cart.push(item);
+            }
+        },
+        openModalToCart(state) {
+            state.showCart.show = true
+            //state.cart.push(dialog);
+        },
         setCurrentUser(state, payload) {
             state.currentUser = payload
         },

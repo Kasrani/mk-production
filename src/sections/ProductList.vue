@@ -49,13 +49,13 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn
-              color="amber darken-3"
-              text
-            >
-              Ajouter au panier
-            </v-btn>
-
+            <!--AddToCart -->
+            <add-to-cart
+              :product-image="getImage(product.images)"
+              :p-id="product.id"
+              :price="product.price"
+              :name="product.name"
+            ></add-to-cart>
             <v-spacer></v-spacer>
 
             <v-btn
@@ -73,21 +73,23 @@
 
 <script>
 import {db} from '../firebase';
+import AddToCart from '../components/global/AddToCart';
 export default {
   name: "Products-list",
+  components: {
+    AddToCart,
+  },
   data(){
     return {
         products: [],
     }
   },
   methods:{
-    /*
-    getImage(images){
+    getImage(images) {
       return images[0];
     }
-    */
   },
-  firestore(){
+  firestore() {
     return {
       products: db.collection('products'),
     }
@@ -95,8 +97,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.v-item-group {
-    padding-bottom: 20px;
-}
+<style>
+
 </style>>
