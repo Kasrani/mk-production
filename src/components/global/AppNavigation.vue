@@ -19,7 +19,7 @@ export default {
     name: 'AppNavigation',
     data() {
         return {
-            appTitle: 'mk-production',
+            appTitle: 'mk-vintage',
             drawer: false,
             items: [
                 { title: 'Accueil' },
