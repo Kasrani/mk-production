@@ -14,7 +14,15 @@ Vue.use(VueFirestore, {
     enumerable: true  //  whether it is enumerable or not. Default is true.
 })
 
+import Vue2Filters from 'vue2-filters'
 
+Vue.use(Vue2Filters)
+
+Vue.filter('currencyEuro', function (value, symbol) {
+  let currency = Vue.filter('currency')
+  symbol = symbol != null ? symbol : '€ '
+  return currency(value, symbol, 2, { thousandsSeparator: '.', decimalSeparator: ',' })
+})
 
 
 Vue.use(VueFirestore)

@@ -107,21 +107,23 @@ export default {
       }
   },
   methods:{
-      resetPassword(){
-          const auth = fb.auth();          
-          auth.sendPasswordResetEmail(auth.currentUser.email).then(() =>  {
-            // add Snackbar here
-               console.log('email sent');
-          }).catch((error) =>  {
-              console.log(error);
-          });
-      },
-      updateProfile(){
-          this.$firestore.profile.update(this.profile);
-          console.log('Prodil edited');
-      },
-      uploadImage(){}
+    resetPassword(){
+      const auth = fb.auth();          
+      auth.sendPasswordResetEmail(auth.currentUser.email).then(() =>  {
+        // add Snackbar here
+            console.log('email sent');
+      }).catch((error) =>  {
+          console.log(error);
+      });
+    },
+    updateProfile(){
+      this.$firestore.profile.update(this.profile);
+      console.log('Prodil edited');
+    },
+    uploadImage(){},
+    confirmPassword(){}
   },
+
   created(){
   }
 };

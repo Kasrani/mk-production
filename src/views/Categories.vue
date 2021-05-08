@@ -49,7 +49,7 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-title>Catégories</v-card-title>
+    <v-card-title>Catégorie 1</v-card-title>
 
     <v-card-text>
       <v-chip-group
@@ -129,7 +129,7 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-title>Catégories</v-card-title>
+    <v-card-title>Catégorie 2</v-card-title>
 
     <v-card-text>
       <v-chip-group
@@ -210,7 +210,7 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-title>Catégories</v-card-title>
+    <v-card-title>Catégorie 3</v-card-title>
 
     <v-card-text>
       <v-chip-group
@@ -242,6 +242,7 @@
 </template>
 <script>
   export default {
+    name: 'Categories',
     data: () => ({
       loading: false,
       selection: 0,

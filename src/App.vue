@@ -53,7 +53,7 @@
 
     <v-app-bar
       app
-      color="#F0BF51"
+      color="amber darken-1"
       dark
       prominent
       :height="$route.path === '/todo' ? '220' : '150'"

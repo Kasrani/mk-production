@@ -13,15 +13,14 @@ const routes = [
         component: () => import('../views/Home.vue'),
     },
     {
+        name: 'Categories',
+        path: '/categories',
+        component: () => import('../views/Categories.vue'),
+    },
+    {
         name: 'Todo',
         path: '/todo',
         component: () => import('../views/Todo.vue'),
-        meta: {requiresAuth: true}
-    },
-    {
-        name: 'Products',
-        path: '/products',
-        component: () => import('../views/Products.vue'),
         meta: {requiresAuth: true}
     },
     {
@@ -33,7 +32,13 @@ const routes = [
     {
         name: 'ProductList',
         path: '/product-list',
-        component: () => import('../views/ProductList.vue'),
+        component: () => import('../sections/ProductList.vue'),
+    },
+    {
+        name: 'Products',
+        path: '/products',
+        component: () => import('../sections/Products.vue'),
+        meta: {requiresAuth: true}
     },
     {
         name: 'SignIn',
