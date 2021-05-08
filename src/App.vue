@@ -198,4 +198,7 @@ export default {
 .v-slide-group__prev {
 display: none !important;
 }
+a {
+  text-decoration: none;
+}
 </style>

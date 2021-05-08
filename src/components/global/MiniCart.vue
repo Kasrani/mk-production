@@ -34,11 +34,9 @@
 
       <v-card-actions class="pb-6">
         <v-spacer></v-spacer>
-
-        <v-btn color="amber darken-3"> Continuer vos achats </v-btn>
-
+        <v-btn color="amber darken-3" @click.stop="checkout"> Checkout </v-btn>
         <v-btn color="amber darken-3" text @click.stop="show = false">
-          Close
+          Continuer vos achats
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -61,8 +59,15 @@ export default {
       },
     },
   },
+  methods: {
+    checkout() {
+      this.$store.state.showCart.show = false
+      this.$router.push('/checkout')
+    }
+  }
 };
 </script>
 
 <style>
+
 </style>

@@ -56,6 +56,12 @@ const routes = [
         component: () => import('../views/Account.vue'),
         meta: {requiresAuth: true}
     },
+    {
+        name: 'Checkout',
+        path: '/checkout',
+        component: () => import('../views/Checkout.vue'),
+        meta: {requiresAuth: true}
+    },
 ];
 
 const router = new VueRouter({

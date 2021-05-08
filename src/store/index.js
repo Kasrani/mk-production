@@ -8,25 +8,20 @@ import router from '../router/index'
 let database = new Localbase('database')
 database.config.debug = false
 
+let cart = window.localStorage.getItem('cart');
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
         appTitle: process.env.VUE_APP_TITLE,
         currentUser: null,
-        cart: [],
+        cart: cart ? JSON.parse(cart) : [],
         showCart: {
             show: false,
         },
         search: null,
-        tasks: [
-            //{
-            //    id: 1,
-            //    title: "Tache par défaut",
-            //    done: false,
-            //    dueDate: '2021-05-01'
-            //}
-        ],
+        tasks: [],
         snackbar: {
             show: false,
             text: '',
@@ -42,6 +37,10 @@ export default new Vuex.Store({
             } else {
                 state.cart.push(item);
             }
+            this.commit('saveData');
+        },
+        saveData(state) {
+            window.localStorage.setItem('cart', JSON.stringify(state.cart));
         },
         openModalToCart(state) {
             state.showCart.show = true
