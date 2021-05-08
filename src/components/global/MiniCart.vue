@@ -6,7 +6,7 @@
       <v-card-text>
         <!-- v-card in modal -->
         <v-card
-          class="mx-auto"
+          class="mx-auto mb-3"
           max-width="100%"
           outlined
           v-for="item in this.$store.state.cart"
@@ -14,19 +14,21 @@
         >
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="overline mb-4">OVERLINE</div>
               <v-list-item-title class="headline mb-1">
                 {{ item.productName }}
               </v-list-item-title>
               <v-list-item-subtitle>{{ item.productPrice | currencyEuro }}</v-list-item-subtitle>
               <v-list-item-subtitle>Quantité : {{ item.productQuantity }}</v-list-item-subtitle>
             </v-list-item-content>
+            
+            <v-list-item-action>
+                <v-img
+                    max-width="150"
+                    max-height="100"
+                    :src="item.productImage"
+                ></v-img>
+            </v-list-item-action>
           </v-list-item>
-          <v-img
-            :src="item.productImage"
-            max-height="80"
-            max-width="80"
-          ></v-img>
         </v-card>
       </v-card-text>
 

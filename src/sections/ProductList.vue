@@ -51,7 +51,7 @@
           <v-card-actions>
             <!--AddToCart -->
             <add-to-cart
-              :product-image="getImage(product.images)"
+              :image="getImage(product.images)"
               :p-id="product.id"
               :price="product.price"
               :name="product.name"

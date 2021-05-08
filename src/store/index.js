@@ -37,6 +37,7 @@ export default new Vuex.Store({
         addToCart(state, item) {
             let found = state.cart.find(product => product.productId == item.productId);   
             if(found) {
+                // add no quantity
                 found.productQuantity++;   
             } else {
                 state.cart.push(item);
