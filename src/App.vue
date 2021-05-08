@@ -18,7 +18,7 @@
           <div class="white--text text-sibtitle-2">{{ currentUser.email }}</div>
           <v-row>
             <v-chip
-              v-show="currentUser && (currentUser.email === 'admin@mk-vintage.fr')"
+              v-show="currentUser.email === 'admin@mk-vintage.fr'"
               class="ma-3 mt-5"
               color="green"
               text-color="white"
@@ -26,7 +26,7 @@
               Admin
             </v-chip>
             <v-chip
-              v-show="currentUser && (currentUser.email !== 'admin@mk-vintage.fr')"
+              v-show="currentUser.email !== 'admin@mk-vintage.fr'"
               class="ma-3 mt-5"
               color="green"
               text-color="white"
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+//import { fb } from "./firebase";
 import Search from './components/Tools/Search.vue'
 import LiveDateTime from './components/Tools/LiveDateTime.vue'
 import FieldAddTask from './components/Todo/FieldAddTask.vue'
@@ -124,6 +125,12 @@ export default {
       { title: "Profil", icon: "mdi-account-box", to: "/account" },
     ]
   }),
+  /*
+  created() {
+    const user = fb.auth().currentUser;
+    this.email = user.email;
+  },
+  */
   components: {
     Search,
     "live-data-time": LiveDateTime,

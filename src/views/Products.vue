@@ -273,7 +273,7 @@ export default {
         confirmButtonText: 'Oui, supprimez-le !'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$firestore.products.doc(doc['.key']).delete()
+          this.$firestore.products.doc(doc.id).delete()
           Swal.fire(
             'Supprimé !',
             'Votre produit a été supprimé.',

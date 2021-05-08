@@ -61,6 +61,7 @@
 </div>
 </template>
 <script>
+import { fb, db } from "../firebase";
 export default {
 
     name: "SignUp",
@@ -74,6 +75,24 @@ export default {
     }; 
     },
     methods: {
+      signUp() {
+            // sign user up
+            fb.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+                //this.$router.replace('account');
+                console.log(user.user.uid);
+                console.log(this.name)
+                db.collection("profiles").doc(user.user.uid).set({
+                name: this.name,
+                //email: form.email,
+                //password: form.password,
+                })
+            })
+        },
+
+
+
+
+        /*
         signUp() {
           this.$store.dispatch('signUp', {
             email: this.email,
@@ -81,6 +100,7 @@ export default {
             name: this.name,
           })
         }
+        */
     },
 };
 </script>

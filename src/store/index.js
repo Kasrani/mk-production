@@ -85,7 +85,7 @@ export default new Vuex.Store({
             },
             async fetchUserProfile({ commit }, user) {
             // fetch user profile
-            const userProfile = await fb.usersCollection.doc(user.uid).get()
+            const userProfile = await fb.profilesCollection.doc(user.uid).get()
         
             // set user profile in state
             commit('setCurrentUser', userProfile.data())
@@ -94,20 +94,6 @@ export default new Vuex.Store({
             if (router.currentRoute.path === '/sign-in') {
                 router.push('/account')
             }
-        },
-        async signUp({ dispatch }, form) {
-            // sign user up
-            const { user } = await fb.auth.createUserWithEmailAndPassword(form.email, form.password)
-          
-            // create user profile object in userCollections
-            await fb.usersCollection.doc(user.uid).set({
-              name: form.name,
-              email: form.email,
-              //password: form.password,
-            })
-          
-            // fetch user profile and set in state
-            dispatch('fetchUserProfile', user)
         },
         async signOut({ commit }) {
             location.reload();

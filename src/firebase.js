@@ -79,7 +79,7 @@ const db = firebase.firestore()
 const auth = firebase.auth()
 
 // collection references
-const usersCollection = db.collection('users')
+const profilesCollection = db.collection('profiles')
 const postsCollection = db.collection('posts')
 const commentsCollection = db.collection('comments')
 const likesCollection = db.collection('likes')
@@ -89,7 +89,7 @@ export {
   db,
   auth,
   fb,
-  usersCollection,
+  profilesCollection,
   postsCollection,
   commentsCollection,
   likesCollection
